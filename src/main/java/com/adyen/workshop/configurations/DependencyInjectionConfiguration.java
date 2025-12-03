@@ -18,8 +18,11 @@ public class DependencyInjectionConfiguration {
 
     @Bean
     Client client() {
-        // Step 4
+        // Step 4: Create Adyen Client
         var config = new Config();
+    config.setApiKey(applicationConfiguration.getAdyenApiKey()); // Use Adyen API Key
+
+    config.setEnvironment(Environment.TEST); // Set environment to TEST
 
         return new Client(config);
     }

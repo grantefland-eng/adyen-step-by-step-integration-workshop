@@ -24,6 +24,9 @@
     <!-- Step 6 -->
     <!-- Add Adyen.Web Components/Drop-in stylesheet and embed script -->
 
+<link rel="stylesheet" href="https://checkoutshopper-testk/5.59.0/adyen.css
+<script src="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk.js</script>
+
 </head>
 <body>
 <header id="header">
@@ -34,5 +37,48 @@
 <div class="container">
     <th:block layout:fragment="content"/>
 </div>
+
+<script>
+    // Step 6: Initialize Adyen Drop-in
+    const configuration = {
+        environment: 'test', // Adyen TEST environment
+        clientKey: 'YOUR_ADYEN_CLIENT_KEY', // Replace with your actual client key
+        paymentMethodsResponse: {
+            merchantAccount: "ADYEN_MERCHANT_ACCOUNT", // Replace with your merchant account
+            shopperReference: "your-shopper-reference-123",
+            storedPaymentMethods: [
+                {
+                    brand: "upi_intent",
+                    id: "Z58FGTKBRCQ2WN27",
+                    mandate: {
+                        amount: "7005",
+                        amountRule: "max",
+                        billingAttemptsRule: "on",
+                        billingDay: "24",
+                        currency: "INR",
+                        endsAt: "2026-08-09",
+                        frequency: "adhoc",
+                        mandateId: "123abc-abc123...",
+                        providerId: "123abc-abc123...",
+                        remarks: "mandate name/remarks",
+                        startsAt: "2024-08-07",
+                        status: "active",
+                        txVariant: "upi_intent"
+                    },
+                    supportedRecurringProcessingModels: [
+                        "CardOnFile",
+                        "Subscription",
+                        "UnscheduledCardOnFile"
+                    ],
+                    type: "upi"
+                }
+            ]
+        }
+    };
+
+    const checkout = new AdyenCheckout(configuration);
+    checkout.create('dropin').mount('#dropin-container');
+</script>
+<div id="dropin-container"></div>
 </body>
 </html>
